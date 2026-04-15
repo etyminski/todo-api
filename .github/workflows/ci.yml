@@ -1,0 +1,39 @@
+name: CI
+
+# Quando rodar? A cada push ou pull request na branch main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    # Em qual sistema rodar? Ubuntu (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixar o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Instalar o Node.js
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Instalar as dependências
+      - name: Instalar dependências
+        run: npm install
+
+      # 4. (Opcional) Rodar o lint
+      # - name: Lint
+      #   run: npm run lint
+
+      # 5. Rodar os testes
+      - name: Rodar testes
+        run: npm test
+        env:
+          JWT_SECRET: chave-secreta-exemplo
+          NODE_ENV: test
