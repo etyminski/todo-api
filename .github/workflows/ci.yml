@@ -1,6 +1,5 @@
-name: CI
+name: CI/CD
 
-# Quando rodar? A cada push ou pull request na branch main
 on:
   push:
     branches: [main]
@@ -9,31 +8,30 @@ on:
 
 jobs:
   test:
-    # Em qual sistema rodar? Ubuntu (Linux)
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Baixar o código do repositório
-      - name: Checkout do código
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Instalar o Node.js
-      - name: Instalar Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3. Instalar as dependências
-      - name: Instalar dependências
+      - name: Install dependencies
         run: npm install
 
-      # 4. (Opcional) Rodar o lint
-      # - name: Lint
-      #   run: npm run lint
-
-      # 5. Rodar os testes
-      - name: Rodar testes
+      - name: Run tests
         run: npm test
         env:
           JWT_SECRET: chave-secreta-exemplo
           NODE_ENV: test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Simulate deploy
+        run: echo "Deploy successful"
