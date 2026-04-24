@@ -35,13 +35,3 @@ jobs:
     steps:
       - name: Simulate deploy
         run: echo "Deploy successful"
-        
-  discord:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run Discord Webhook
-        uses: Sniddl/discord-commits@v1.6
-        with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
